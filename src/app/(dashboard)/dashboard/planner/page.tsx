@@ -17,6 +17,7 @@ import {
 } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
 import { useState, useEffect } from "react"
+import { useToast } from "@/hooks/use-toast"
 
 const recommendations = [
   { platform: "Instagram", time: "18:00", day: "Tuesday", reason: "Peak engagement for Visual Tech niches" },
@@ -25,6 +26,7 @@ const recommendations = [
 ]
 
 export default function PlannerPage() {
+  const { toast } = useToast()
   const [date, setDate] = useState<Date | undefined>(undefined)
   const [heatmapData, setHeatmapData] = useState<number[][]>([])
   const [mounted, setMounted] = useState(false)
@@ -32,12 +34,19 @@ export default function PlannerPage() {
   useEffect(() => {
     setMounted(true)
     setDate(new Date())
-    // Generate static-feeling but randomly seeded data safely on client
+    // Generate data safely on client to avoid hydration mismatch
     const data = Array.from({ length: 24 }, () => 
       Array.from({ length: 7 }, () => Math.random())
     )
     setHeatmapData(data)
   }, [])
+
+  const handleScheduleAction = (title: string) => {
+    toast({
+      title: "Action Initiated",
+      description: `Scheduling workflow for "${title}" has been started.`,
+    })
+  }
 
   if (!mounted) {
     return (
@@ -61,7 +70,7 @@ export default function PlannerPage() {
           <h1 className="text-3xl font-headline font-bold">Content Planner</h1>
           <p className="text-muted-foreground">AI-optimized scheduling for maximum viral impact.</p>
         </div>
-        <Button className="premium-gradient">
+        <Button className="premium-gradient" onClick={() => handleScheduleAction("New Post")}>
           <Plus className="w-4 h-4 mr-2" />
           Schedule Post
         </Button>
@@ -183,7 +192,12 @@ export default function PlannerPage() {
                     <Flame className="w-4 h-4 text-orange-500 shrink-0" />
                     <p className="text-xs text-muted-foreground">{rec.reason}</p>
                   </div>
-                  <Button variant="ghost" size="sm" className="w-full text-xs h-8">
+                  <Button 
+                    variant="ghost" 
+                    size="sm" 
+                    className="w-full text-xs h-8"
+                    onClick={() => handleScheduleAction(`${rec.platform} - ${rec.time}`)}
+                  >
                     Schedule for this time
                     <ArrowRight className="w-3 h-3 ml-2" />
                   </Button>
