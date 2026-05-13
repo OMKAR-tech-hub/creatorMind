@@ -30,16 +30,15 @@ export default function PlannerPage() {
   const [mounted, setMounted] = useState(false)
 
   useEffect(() => {
-    // Generate random heatmap data and set current date on mount to avoid hydration mismatch
     setMounted(true)
     setDate(new Date())
+    // Generate static-feeling but randomly seeded data safely on client
     const data = Array.from({ length: 24 }, () => 
       Array.from({ length: 7 }, () => Math.random())
     )
     setHeatmapData(data)
   }, [])
 
-  // Avoid hydration mismatch by rendering a consistent structure on server/initial mount
   if (!mounted) {
     return (
       <div className="max-w-7xl mx-auto space-y-8 animate-in">
@@ -130,33 +129,23 @@ export default function PlannerPage() {
             </CardHeader>
             <CardContent>
               <div className="grid grid-cols-[repeat(24,1fr)] gap-1 h-32">
-                {heatmapData.length > 0 ? (
-                  heatmapData.map((column, i) => (
-                    <div key={i} className="flex flex-col gap-1">
-                      {column.map((intensity, j) => (
-                        <div 
-                          key={j} 
-                          className="flex-1 rounded-sm" 
-                          style={{ 
-                            backgroundColor: intensity > 0.7 
-                              ? 'hsl(var(--primary))' 
-                              : intensity > 0.4 
-                              ? 'hsl(var(--primary) / 0.5)' 
-                              : 'hsl(var(--muted) / 0.2)' 
-                          }} 
-                        />
-                      ))}
-                    </div>
-                  ))
-                ) : (
-                  Array.from({ length: 24 }).map((_, i) => (
-                    <div key={i} className="flex flex-col gap-1">
-                      {Array.from({ length: 7 }).map((_, j) => (
-                        <div key={j} className="flex-1 rounded-sm bg-muted/10" />
-                      ))}
-                    </div>
-                  ))
-                )}
+                {heatmapData.map((column, i) => (
+                  <div key={i} className="flex flex-col gap-1">
+                    {column.map((intensity, j) => (
+                      <div 
+                        key={j} 
+                        className="flex-1 rounded-sm" 
+                        style={{ 
+                          backgroundColor: intensity > 0.7 
+                            ? 'hsl(var(--primary))' 
+                            : intensity > 0.4 
+                            ? 'hsl(var(--primary) / 0.5)' 
+                            : 'hsl(var(--muted) / 0.2)' 
+                        }} 
+                      />
+                    ))}
+                  </div>
+                ))}
               </div>
               <div className="flex justify-between mt-4 text-[10px] text-muted-foreground font-mono uppercase">
                 <span>12 AM</span>
@@ -203,7 +192,7 @@ export default function PlannerPage() {
             </CardContent>
           </Card>
 
-          <Card className="border-border/50 bg-card/40 backdrop-blur-sm p-2">
+          <Card className="border-border/50 bg-primary/5 p-2">
             <Calendar
               mode="single"
               selected={date}
