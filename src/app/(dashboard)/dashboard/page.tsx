@@ -1,5 +1,7 @@
+
 "use client"
 
+import Link from "next/link"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { 
@@ -13,15 +15,13 @@ import {
   Globe
 } from "lucide-react"
 import { 
-  LineChart, 
-  Line, 
-  XAxis, 
-  YAxis, 
-  CartesianGrid, 
-  Tooltip, 
   ResponsiveContainer,
   AreaChart,
-  Area
+  Area,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip
 } from "recharts"
 
 const stats = [
@@ -50,10 +50,14 @@ export default function DashboardPage() {
           <p className="text-muted-foreground mt-1">Your content is trending in 4 countries today.</p>
         </div>
         <div className="flex items-center gap-3">
-          <Button variant="outline" className="hidden sm:flex">View Analytics</Button>
-          <Button className="premium-gradient">
-            <Sparkles className="w-4 h-4 mr-2" />
-            Create New Post
+          <Button variant="outline" className="hidden sm:flex" asChild>
+            <Link href="/dashboard/trends">View Analytics</Link>
+          </Button>
+          <Button className="premium-gradient" asChild>
+            <Link href="/dashboard/generator">
+              <Sparkles className="w-4 h-4 mr-2" />
+              Create New Post
+            </Link>
           </Button>
         </div>
       </div>
@@ -134,9 +138,11 @@ export default function DashboardPage() {
                 </div>
               </div>
             ))}
-            <Button variant="ghost" className="w-full mt-4 text-primary hover:text-primary/80 hover:bg-primary/5">
-              Explore All Trends
-              <ArrowUpRight className="w-4 h-4 ml-2" />
+            <Button variant="ghost" className="w-full mt-4 text-primary hover:text-primary/80 hover:bg-primary/5" asChild>
+              <Link href="/dashboard/trends">
+                Explore All Trends
+                <ArrowUpRight className="w-4 h-4 ml-2" />
+              </Link>
             </Button>
           </CardContent>
         </Card>
@@ -149,7 +155,9 @@ export default function DashboardPage() {
               <CardTitle className="text-xl font-headline">Recent Generations</CardTitle>
               <CardDescription>Your latest AI creations</CardDescription>
             </div>
-            <Button variant="outline" size="sm">View History</Button>
+            <Button variant="outline" size="sm" asChild>
+              <Link href="/dashboard/repurpose">View History</Link>
+            </Button>
           </CardHeader>
           <CardContent className="space-y-4">
             {[
@@ -193,8 +201,8 @@ export default function DashboardPage() {
                 </div>
               </div>
             ))}
-            <Button className="w-full mt-4 bg-foreground text-background hover:bg-foreground/90">
-              Open Calendar
+            <Button className="w-full mt-4 bg-foreground text-background hover:bg-foreground/90" asChild>
+              <Link href="/dashboard/planner">Open Calendar</Link>
             </Button>
           </CardContent>
         </Card>

@@ -1,3 +1,4 @@
+
 "use client"
 
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
@@ -98,7 +99,7 @@ export default function PlannerPage() {
                     </div>
                     <div className="flex-1 p-2 space-y-2 bg-muted/5 overflow-y-auto">
                       {day === 'Tue' && (
-                        <div className="p-2 rounded-md bg-primary/20 border border-primary/30 text-[10px] space-y-1">
+                        <div className="p-2 rounded-md bg-primary/20 border border-primary/30 text-[10px] space-y-1 cursor-pointer" onClick={() => handleScheduleAction("Product Demo")}>
                           <div className="flex justify-between">
                             <span className="font-bold">18:00</span>
                             <Instagram className="w-2 h-2" />
@@ -107,7 +108,7 @@ export default function PlannerPage() {
                         </div>
                       )}
                       {day === 'Wed' && (
-                        <div className="p-2 rounded-md bg-secondary/20 border border-secondary/30 text-[10px] space-y-1">
+                        <div className="p-2 rounded-md bg-secondary/20 border border-secondary/30 text-[10px] space-y-1 cursor-pointer" onClick={() => handleScheduleAction("Thought Leadership")}>
                           <div className="flex justify-between">
                             <span className="font-bold">09:30</span>
                             <Linkedin className="w-2 h-2" />
@@ -116,7 +117,7 @@ export default function PlannerPage() {
                         </div>
                       )}
                       {day === 'Fri' && (
-                        <div className="p-2 rounded-md bg-foreground/10 border border-foreground/20 text-[10px] space-y-1">
+                        <div className="p-2 rounded-md bg-foreground/10 border border-foreground/20 text-[10px] space-y-1 cursor-pointer" onClick={() => handleScheduleAction("Industry Rant")}>
                           <div className="flex justify-between">
                             <span className="font-bold">12:00</span>
                             <Twitter className="w-2 h-2" />

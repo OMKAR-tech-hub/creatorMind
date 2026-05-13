@@ -1,3 +1,4 @@
+
 "use client"
 
 import { useState } from "react"
@@ -17,7 +18,8 @@ import {
   FileText,
   CheckCircle2,
   Loader2,
-  Zap
+  Zap,
+  Plus
 } from "lucide-react"
 import { generatePromptedContent, GeneratePromptedContentOutput } from "@/ai/flows/generate-prompted-content"
 import { Button } from "@/components/ui/button"
@@ -31,7 +33,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form"
-import { Input } from "@/components/ui/input"
+import { Textarea } from "@/components/ui/textarea"
 import {
   Select,
   SelectContent,
@@ -39,10 +41,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
-import { Textarea } from "@/components/ui/textarea"
 import { useToast } from "@/hooks/use-toast"
 import { Badge } from "@/components/ui/badge"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
 const formSchema = z.object({
   topic: z.string().min(5, "Topic must be at least 5 characters"),
@@ -93,6 +93,11 @@ export default function ContentLabPage() {
     })
   }
 
+  const handleReset = () => {
+    setResult(null)
+    form.reset()
+  }
+
   const PlatformIcon = ({ platform }: { platform: string }) => {
     switch (platform) {
       case 'Instagram': return <Instagram className="w-5 h-5 text-pink-500" />
@@ -107,9 +112,17 @@ export default function ContentLabPage() {
 
   return (
     <div className="max-w-6xl mx-auto space-y-8 animate-in">
-      <div className="flex flex-col gap-2">
-        <h1 className="text-3xl font-headline font-bold">Content Lab</h1>
-        <p className="text-muted-foreground">Generate viral-ready content tailored for any platform.</p>
+      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+        <div className="flex flex-col gap-2">
+          <h1 className="text-3xl font-headline font-bold">Content Lab</h1>
+          <p className="text-muted-foreground">Generate viral-ready content tailored for any platform.</p>
+        </div>
+        {result && (
+          <Button variant="outline" onClick={handleReset} className="border-primary/20 hover:bg-primary/5">
+            <Plus className="w-4 h-4 mr-2" />
+            Create New
+          </Button>
+        )}
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
