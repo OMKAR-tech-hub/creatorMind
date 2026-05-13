@@ -25,16 +25,35 @@ const recommendations = [
 ]
 
 export default function PlannerPage() {
-  const [date, setDate] = useState<Date | undefined>(new Date())
+  const [date, setDate] = useState<Date | undefined>(undefined)
   const [heatmapData, setHeatmapData] = useState<number[][]>([])
+  const [mounted, setMounted] = useState(false)
 
   useEffect(() => {
-    // Generate random heatmap data on mount to avoid hydration mismatch
+    // Generate random heatmap data and set current date on mount to avoid hydration mismatch
+    setMounted(true)
+    setDate(new Date())
     const data = Array.from({ length: 24 }, () => 
       Array.from({ length: 7 }, () => Math.random())
     )
     setHeatmapData(data)
   }, [])
+
+  // Avoid hydration mismatch by rendering a consistent structure on server/initial mount
+  if (!mounted) {
+    return (
+      <div className="max-w-7xl mx-auto space-y-8 animate-in">
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+          <div className="w-48 h-10 bg-muted animate-pulse rounded" />
+          <div className="w-32 h-10 bg-muted animate-pulse rounded" />
+        </div>
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+          <div className="lg:col-span-8 h-[600px] bg-muted animate-pulse rounded-xl" />
+          <div className="lg:col-span-4 h-[600px] bg-muted animate-pulse rounded-xl" />
+        </div>
+      </div>
+    )
+  }
 
   return (
     <div className="max-w-7xl mx-auto space-y-8 animate-in">
@@ -110,7 +129,7 @@ export default function PlannerPage() {
               <CardDescription>When your specific audience is most active</CardDescription>
             </CardHeader>
             <CardContent>
-              <div className="grid grid-cols-24 gap-1 h-32">
+              <div className="grid grid-cols-[repeat(24,1fr)] gap-1 h-32">
                 {heatmapData.length > 0 ? (
                   heatmapData.map((column, i) => (
                     <div key={i} className="flex flex-col gap-1">
@@ -130,7 +149,6 @@ export default function PlannerPage() {
                     </div>
                   ))
                 ) : (
-                  // Loading state / placeholder grid
                   Array.from({ length: 24 }).map((_, i) => (
                     <div key={i} className="flex flex-col gap-1">
                       {Array.from({ length: 7 }).map((_, j) => (

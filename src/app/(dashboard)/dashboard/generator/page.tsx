@@ -16,7 +16,8 @@ import {
   Mail, 
   FileText,
   CheckCircle2,
-  Loader2
+  Loader2,
+  Zap
 } from "lucide-react"
 import { generatePromptedContent, GeneratePromptedContentOutput } from "@/ai/flows/generate-prompted-content"
 import { Button } from "@/components/ui/button"
@@ -133,6 +134,7 @@ export default function ContentLabPage() {
                           {...field} 
                         />
                       </FormControl>
+                      <FormDescription>Describe what you want to write about.</FormDescription>
                       <FormMessage />
                     </FormItem>
                   )}
