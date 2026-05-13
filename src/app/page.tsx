@@ -12,6 +12,8 @@ import {
   ChevronRight
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { Badge } from "@/components/ui/badge"
+import { cn } from "@/lib/utils"
 
 export default function LandingPage() {
   return (
@@ -63,9 +65,11 @@ export default function LandingPage() {
                 <ArrowRight className="w-5 h-5 ml-2" />
               </Link>
             </Button>
-            <Button size="lg" variant="outline" className="rounded-full h-14 px-10 text-lg font-semibold w-full sm:w-auto">
-              <Play className="w-4 h-4 mr-2" />
-              Watch Demo
+            <Button size="lg" variant="outline" className="rounded-full h-14 px-10 text-lg font-semibold w-full sm:w-auto" asChild>
+              <Link href="#features">
+                <Play className="w-4 h-4 mr-2" />
+                Watch Demo
+              </Link>
             </Button>
           </div>
 
@@ -121,6 +125,73 @@ export default function LandingPage() {
         </div>
       </section>
 
+      {/* Pricing Section */}
+      <section id="pricing" className="py-24 relative overflow-hidden">
+        <div className="container mx-auto px-6">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-5xl font-headline font-bold mb-4">Simple, transparent pricing.</h2>
+            <p className="text-muted-foreground max-w-2xl mx-auto text-lg">
+              Choose the plan that fits your creative journey. No hidden fees.
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+            {[
+              { 
+                name: "Starter", 
+                price: "$0", 
+                desc: "Perfect for new creators", 
+                features: ["5 AI Generations/day", "Basic Analytics", "Standard Support"],
+                buttonText: "Get Started Free",
+                popular: false
+              },
+              { 
+                name: "Pro", 
+                price: "$29", 
+                desc: "For the serious creator", 
+                features: ["Unlimited Generations", "Viral Predictor", "Global Mode", "Priority Support"],
+                buttonText: "Go Pro Now",
+                popular: true
+              },
+              { 
+                name: "Studio", 
+                price: "$99", 
+                desc: "For teams and agencies", 
+                features: ["Multiple Accounts", "Advanced Team Tools", "API Access", "Dedicated Manager"],
+                buttonText: "Contact Sales",
+                popular: false
+              }
+            ].map((plan, i) => (
+              <div key={i} className={cn(
+                "glass-card p-8 rounded-[2rem] border relative flex flex-col transition-all duration-300",
+                plan.popular ? "border-primary shadow-2xl shadow-primary/10 scale-105 z-10 bg-primary/5" : "border-white/5"
+              )}>
+                {plan.popular && (
+                  <Badge className="absolute top-4 right-4 premium-gradient border-none">Most Popular</Badge>
+                )}
+                <h3 className="text-xl font-headline font-bold mb-2">{plan.name}</h3>
+                <div className="flex items-baseline gap-1 mb-4">
+                  <span className="text-4xl font-bold">{plan.price}</span>
+                  <span className="text-muted-foreground">/mo</span>
+                </div>
+                <p className="text-sm text-muted-foreground mb-6">{plan.desc}</p>
+                <div className="space-y-4 mb-8 flex-1">
+                  {plan.features.map((feature, j) => (
+                    <div key={j} className="flex items-center gap-2 text-sm">
+                      <CheckCircle2 className="w-4 h-4 text-emerald-500" />
+                      {feature}
+                    </div>
+                  ))}
+                </div>
+                <Button className={cn("w-full rounded-full h-12 font-bold", plan.popular ? "premium-gradient" : "")} variant={plan.popular ? "default" : "outline"} asChild>
+                  <Link href="/dashboard">{plan.buttonText}</Link>
+                </Button>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Social Proof */}
       <section className="py-24 border-y border-white/5">
         <div className="container mx-auto px-6">
@@ -142,8 +213,8 @@ export default function LandingPage() {
                   </div>
                 ))}
               </div>
-              <Button className="mt-10 h-14 px-8 rounded-full text-lg font-semibold premium-gradient">
-                Join 50,000+ Creators
+              <Button className="mt-10 h-14 px-8 rounded-full text-lg font-semibold premium-gradient" asChild>
+                <Link href="/dashboard">Join 50,000+ Creators</Link>
               </Button>
             </div>
             <div className="lg:w-1/2 grid grid-cols-2 gap-4">
@@ -188,11 +259,11 @@ export default function LandingPage() {
               Start your journey today. No credit card required for the basic tier.
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-              <Button size="lg" className="bg-white text-primary hover:bg-white/90 rounded-full h-14 px-10 text-lg font-bold">
-                Get Started Now
+              <Button size="lg" className="bg-white text-primary hover:bg-white/90 rounded-full h-14 px-10 text-lg font-bold" asChild>
+                <Link href="/dashboard">Get Started Now</Link>
               </Button>
-              <Button size="lg" variant="ghost" className="text-white hover:bg-white/10 rounded-full h-14 px-10 text-lg font-bold">
-                View Pricing
+              <Button size="lg" variant="ghost" className="text-white hover:bg-white/10 rounded-full h-14 px-10 text-lg font-bold" asChild>
+                <Link href="#pricing">View Pricing</Link>
               </Button>
             </div>
           </div>
@@ -217,10 +288,10 @@ export default function LandingPage() {
             <div>
               <h4 className="font-bold mb-6">Product</h4>
               <ul className="space-y-4 text-sm text-muted-foreground">
-                <li><Link href="#" className="hover:text-foreground">Content Lab</Link></li>
-                <li><Link href="#" className="hover:text-foreground">Viral Predictor</Link></li>
-                <li><Link href="#" className="hover:text-foreground">AI Judge</Link></li>
-                <li><Link href="#" className="hover:text-foreground">Trend Finder</Link></li>
+                <li><Link href="#features" className="hover:text-foreground">Content Lab</Link></li>
+                <li><Link href="/dashboard/predictor" className="hover:text-foreground">Viral Predictor</Link></li>
+                <li><Link href="/dashboard/judge" className="hover:text-foreground">AI Judge</Link></li>
+                <li><Link href="/dashboard/trends" className="hover:text-foreground">Trend Finder</Link></li>
               </ul>
             </div>
             <div>
