@@ -16,7 +16,7 @@ import {
   Twitter
 } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 
 const recommendations = [
   { platform: "Instagram", time: "18:00", day: "Tuesday", reason: "Peak engagement for Visual Tech niches" },
@@ -26,6 +26,15 @@ const recommendations = [
 
 export default function PlannerPage() {
   const [date, setDate] = useState<Date | undefined>(new Date())
+  const [heatmapData, setHeatmapData] = useState<number[][]>([])
+
+  useEffect(() => {
+    // Generate random heatmap data on mount to avoid hydration mismatch
+    const data = Array.from({ length: 24 }, () => 
+      Array.from({ length: 7 }, () => Math.random())
+    )
+    setHeatmapData(data)
+  }, [])
 
   return (
     <div className="max-w-7xl mx-auto space-y-8 animate-in">
@@ -102,11 +111,10 @@ export default function PlannerPage() {
             </CardHeader>
             <CardContent>
               <div className="grid grid-cols-24 gap-1 h-32">
-                {Array.from({ length: 24 }).map((_, i) => (
-                  <div key={i} className="flex flex-col gap-1">
-                    {Array.from({ length: 7 }).map((_, j) => {
-                      const intensity = Math.random()
-                      return (
+                {heatmapData.length > 0 ? (
+                  heatmapData.map((column, i) => (
+                    <div key={i} className="flex flex-col gap-1">
+                      {column.map((intensity, j) => (
                         <div 
                           key={j} 
                           className="flex-1 rounded-sm" 
@@ -118,10 +126,19 @@ export default function PlannerPage() {
                               : 'hsl(var(--muted) / 0.2)' 
                           }} 
                         />
-                      )
-                    })}
-                  </div>
-                ))}
+                      ))}
+                    </div>
+                  ))
+                ) : (
+                  // Loading state / placeholder grid
+                  Array.from({ length: 24 }).map((_, i) => (
+                    <div key={i} className="flex flex-col gap-1">
+                      {Array.from({ length: 7 }).map((_, j) => (
+                        <div key={j} className="flex-1 rounded-sm bg-muted/10" />
+                      ))}
+                    </div>
+                  ))
+                )}
               </div>
               <div className="flex justify-between mt-4 text-[10px] text-muted-foreground font-mono uppercase">
                 <span>12 AM</span>
