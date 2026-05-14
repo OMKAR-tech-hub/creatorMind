@@ -8,13 +8,11 @@ import {
   Search, 
   Languages, 
   Calendar, 
-  History, 
   Settings, 
-  ChevronRight,
-  TrendingUp,
-  Scale,
-  Zap,
-  Layers
+  Scale, 
+  Zap, 
+  Layers,
+  Heart
 } from "lucide-react"
 import { cn } from "@/lib/utils"
 import {
@@ -34,6 +32,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 const mainNav = [
   { name: "Overview", icon: LayoutDashboard, href: "/dashboard" },
   { name: "Content Lab", icon: Sparkles, href: "/dashboard/generator" },
+  { name: "Mood AI", icon: Heart, href: "/dashboard/mood" },
   { name: "Viral Predictor", icon: Zap, href: "/dashboard/predictor" },
   { name: "Repurpose Studio", icon: Layers, href: "/dashboard/repurpose" },
 ]
