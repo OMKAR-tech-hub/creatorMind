@@ -1,4 +1,3 @@
-
 "use client"
 
 import Link from "next/link"
@@ -14,6 +13,7 @@ import {
   Zap, 
   Layers,
   Heart,
+  Mic,
   ChevronRight
 } from "lucide-react"
 import { cn } from "@/lib/utils"
@@ -36,6 +36,7 @@ const mainNav = [
   { name: "Overview", icon: LayoutDashboard, href: "/dashboard" },
   { name: "Content Lab", icon: Sparkles, href: "/dashboard/generator" },
   { name: "Mood AI", icon: Heart, href: "/dashboard/mood" },
+  { name: "Voice AI", icon: Mic, href: "/dashboard/voice" },
   { name: "Viral Predictor", icon: Zap, href: "/dashboard/predictor" },
   { name: "Repurpose Studio", icon: Layers, href: "/dashboard/repurpose" },
 ]
@@ -85,7 +86,7 @@ export function DashboardSidebar() {
                     )}
                   >
                     <Link href={item.href} className="flex items-center gap-3">
-                      <item.icon className={cn("w-5 h-5", pathname === item.href ? "text-primary glow-icon" : "")} />
+                      <item.icon className={cn("w-5 h-5", pathname === item.href ? "text-primary" : "")} />
                       <span className="font-medium">{item.name}</span>
                       {pathname === item.href && (
                         <motion.div layoutId="active" className="ml-auto w-1 h-4 bg-primary rounded-full" />
