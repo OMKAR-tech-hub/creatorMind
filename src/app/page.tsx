@@ -58,7 +58,7 @@ export default function LandingPage() {
       </nav>
 
       {/* Hero Section */}
-      <section className="relative pt-48 pb-32 overflow-hidden">
+      <section className="relative pt-48 pb-32 overflow-hidden" id="home">
         {/* Background Mesh */}
         <div className="absolute top-[-20%] left-[-10%] w-[60%] h-[60%] bg-primary/10 rounded-full blur-[160px] pointer-events-none animate-pulse-subtle" />
         <div className="absolute bottom-[-10%] right-[-10%] w-[60%] h-[60%] bg-secondary/10 rounded-full blur-[160px] pointer-events-none animate-pulse-subtle [animation-delay:2s]" />
@@ -167,7 +167,7 @@ export default function LandingPage() {
                 </div>
               </div>
             </motion.div>
-          </div>
+          </motion.div>
         </div>
       </section>
 
