@@ -48,6 +48,7 @@ import {
 import { useToast } from "@/hooks/use-toast"
 import { Badge } from "@/components/ui/badge"
 import { motion, AnimatePresence } from "framer-motion"
+import { cn } from "@/lib/utils"
 
 const moods = [
   { id: 'Motivated', icon: Coffee, label: 'Motivated', color: 'text-orange-400' },
