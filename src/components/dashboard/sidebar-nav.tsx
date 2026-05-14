@@ -14,6 +14,7 @@ import {
   Layers,
   Heart,
   Mic,
+  Image as ImageIcon,
   ChevronRight
 } from "lucide-react"
 import { cn } from "@/lib/utils"
@@ -35,6 +36,7 @@ import { motion } from "framer-motion"
 const mainNav = [
   { name: "Overview", icon: LayoutDashboard, href: "/dashboard" },
   { name: "Content Lab", icon: Sparkles, href: "/dashboard/generator" },
+  { name: "Image Studio", icon: ImageIcon, href: "/dashboard/image-studio" },
   { name: "Mood AI", icon: Heart, href: "/dashboard/mood" },
   { name: "Voice AI", icon: Mic, href: "/dashboard/voice" },
   { name: "Viral Predictor", icon: Zap, href: "/dashboard/predictor" },
